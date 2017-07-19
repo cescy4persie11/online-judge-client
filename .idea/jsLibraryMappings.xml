@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$/oj-client" libraries="{lab1/oj-client/node_modules}" />
+    <file url="file://$PROJECT_DIR$/oj-server" libraries="{lab1/oj-server/node_modules}" />
+    <file url="PROJECT" libraries="{express-serve-static-core-DefinitelyTyped, lab1/oj-client/node_modules, lab1/oj-server/node_modules, requirejs-DefinitelyTyped, serve-static-DefinitelyTyped}" />
+    <includedPredefinedLibrary name="Node.js Core" />
+    <includedPredefinedLibrary name="WebGL" />
+  </component>
+</project>
