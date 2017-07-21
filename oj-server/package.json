@@ -10,6 +10,7 @@
   "author": "cescy4persie11",
   "license": "ISC",
   "dependencies": {
+    "auth0-js": "^8.8.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^4.11.3"
