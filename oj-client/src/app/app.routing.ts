@@ -9,19 +9,20 @@ import { ProblemdetailsComponent } from 'app/component/problemdetails/problemdet
 const appRoutes: Routes = [
   {
     path: '',
-    component: ProblemlistComponent
-  },
-  {
-    path: 'api/v1/problems/:id',
-    component: ProblemdetailsComponent
-  },
-  {
-    path: '',
-    redirectTo: '',
+    redirectTo: 'problems',
     pathMatch: 'full'
   },
   {
-    path: '**', component: ProblemlistComponent
+    path: 'problems',
+    component: ProblemlistComponent
+  },
+  {
+    path: 'problems/:id',
+    component: ProblemdetailsComponent
+  },
+  {
+    path: '**', 
+    redirectTo: 'problems'
   }
 ];
 
