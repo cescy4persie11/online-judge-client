@@ -90,10 +90,12 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_routing__ = __webpack_require__("../../../../../src/app/app.routing.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_problemdetails_service__ = __webpack_require__("../../../../../src/app/services/problemdetails.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__component_problemlist_problemlist_component__ = __webpack_require__("../../../../../src/app/component/problemlist/problemlist.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__component_problemdetails_problemdetails_component__ = __webpack_require__("../../../../../src/app/component/problemdetails/problemdetails.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__component_newproblem_newproblem_component__ = __webpack_require__("../../../../../src/app/component/newproblem/newproblem.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__component_navbar_navbar_component__ = __webpack_require__("../../../../../src/app/component/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__component_editor_editor_component__ = __webpack_require__("../../../../../src/app/component/editor/editor.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__component_problemlist_problemlist_component__ = __webpack_require__("../../../../../src/app/component/problemlist/problemlist.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__component_problemdetails_problemdetails_component__ = __webpack_require__("../../../../../src/app/component/problemdetails/problemdetails.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__component_newproblem_newproblem_component__ = __webpack_require__("../../../../../src/app/component/newproblem/newproblem.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__component_navbar_navbar_component__ = __webpack_require__("../../../../../src/app/component/navbar/navbar.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -110,7 +112,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // Services
 
 
+
 // Components
+
 
 
 
@@ -124,10 +128,11 @@ AppModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["b" /* NgModule */])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_4__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__component_problemlist_problemlist_component__["a" /* ProblemlistComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__component_problemdetails_problemdetails_component__["a" /* ProblemdetailsComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__component_newproblem_newproblem_component__["a" /* NewproblemComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__component_navbar_navbar_component__["a" /* NavbarComponent */]
+            __WEBPACK_IMPORTED_MODULE_10__component_problemlist_problemlist_component__["a" /* ProblemlistComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__component_problemdetails_problemdetails_component__["a" /* ProblemdetailsComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__component_newproblem_newproblem_component__["a" /* NewproblemComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__component_navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__component_editor_editor_component__["a" /* EditorComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -137,6 +142,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__app_routing__["b" /* routes */]
         ],
         providers: [
+            __WEBPACK_IMPORTED_MODULE_8__services_collaboration_service__["a" /* CollaborationService */],
             __WEBPACK_IMPORTED_MODULE_6__services_problemdetails_service__["a" /* ProblemdetailsService */],
             __WEBPACK_IMPORTED_MODULE_7__services_auth_service__["a" /* AuthService */]
         ],
@@ -175,19 +181,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var appRoutes = [
     {
         path: '',
-        component: __WEBPACK_IMPORTED_MODULE_2_app_component_problemlist_problemlist_component__["a" /* ProblemlistComponent */]
-    },
-    {
-        path: 'api/v1/problems/:id',
-        component: __WEBPACK_IMPORTED_MODULE_3_app_component_problemdetails_problemdetails_component__["a" /* ProblemdetailsComponent */]
-    },
-    {
-        path: '',
-        redirectTo: '',
+        redirectTo: 'problems',
         pathMatch: 'full'
     },
     {
-        path: '**', component: __WEBPACK_IMPORTED_MODULE_2_app_component_problemlist_problemlist_component__["a" /* ProblemlistComponent */]
+        path: 'problems',
+        component: __WEBPACK_IMPORTED_MODULE_2_app_component_problemlist_problemlist_component__["a" /* ProblemlistComponent */]
+    },
+    {
+        path: 'problems/:id',
+        component: __WEBPACK_IMPORTED_MODULE_3_app_component_problemdetails_problemdetails_component__["a" /* ProblemdetailsComponent */]
+    },
+    {
+        path: '**',
+        redirectTo: 'problems'
     }
 ];
 var AppRoutingModule = (function () {
@@ -213,6 +220,122 @@ var routableComponents = [__WEBPACK_IMPORTED_MODULE_2_app_component_problemlist_
 
 /***/ }),
 
+/***/ "../../../../../src/app/component/editor/editor.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "@media screen {\n #editor { \n   height: 600px; \n } \n .lang-select { \n   width: 100px; \n   margin-right: 10px; \n } \n header .btn { \n   margin: 0 5px; \n } \n footer .btn { \n   margin: 0 5px; \n } \n .editor-footer, .editor-header { \n   margin: 10px 0; \n } \n .cursor { \n   /*position:absolute;*/ \n   background: rgba(0, 250, 0, 0.5); \n   z-index: 40; \n   width: 2px!important \n } \n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/component/editor/editor.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<section>\n  <header>\n    <select class=\"form-control pull-left lang-select\" id=\"language\" name=\"language\"\n     [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n        <option *ngFor=\"let language of languages\" [value]=\"language\">\n          {{ language }}\n        </option>\n      </select>\n\n  </header>\n    <!-- Button trigger modal -->\n<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n  <span class=\"glyphicon glyphicon-refresh\" aria-hidden=\"true\"></span>\n</button>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        Are you Sure?\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n        <button type=\"button\" class=\"btn btn-primary\" >Cancel</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n  <br/>\n\n  <div class=\"row\">\n  </div>\n  <div id=\"editor\">\n  \n  </div>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">\n      Submit Solution\n    </button>\n  </footer>\n</section>\n\n\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/component/editor/editor.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var EditorComponent = (function () {
+    function EditorComponent(collaborationService, route) {
+        this.collaborationService = collaborationService;
+        this.route = route;
+        this.languages = ['Java', 'Python'];
+        this.language = 'Java';
+        this.defaultContect = {
+            'Java': "function foo(items) {     \n\tvar x = \"All this is syntax highlighted\";     \n\treturn x;\n}\n",
+            'Python': "class Solution:     \n\tdef example():     \n\t\t # write your Python code here\n    "
+        };
+    }
+    EditorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.sessionId = params['id'];
+        });
+        this.initEditor();
+    };
+    EditorComponent.prototype.initEditor = function () {
+        var _this = this;
+        this.editor = ace.edit('editor');
+        this.editor.setTheme('ace/theme/eclipse');
+        this.resetEditor();
+        document.getElementsByTagName('textarea')[0].focus();
+        this.collaborationService.init(this.editor, this.sessionId);
+        this.editor.lastAppliedChanges = null;
+        // TODO
+        // register change callback
+        this.editor.on('change', function (e) {
+            console.log('editor changed' + JSON.stringify(e));
+            if (_this.editor.lastAppliedChanges != e) {
+                _this.collaborationService.change(JSON.stringify(e));
+            }
+        });
+        // cursor movement
+        this.editor.getSession().getSelection().on('changeCursor', function () {
+            var cursor = _this.editor.getSession().getSelection().getCursor();
+            console.log("cursor move", JSON.stringify(cursor));
+            _this.collaborationService.cursorMove(JSON.stringify(cursor));
+        });
+    };
+    EditorComponent.prototype.setLanguage = function (language) {
+        this.language = language;
+        this.resetEditor();
+    };
+    EditorComponent.prototype.resetEditor = function () {
+        console.log("Resetting editor");
+        this.editor.getSession().setMode("ace/mode/" + this.language.toLowerCase());
+        this.editor.setValue(this.defaultContect[this.language]);
+    };
+    EditorComponent.prototype.submit = function () {
+        // TODO
+        var userCodes = this.editor.getValue();
+        console.log(userCodes);
+    };
+    return EditorComponent;
+}());
+EditorComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+        selector: 'app-editor',
+        template: __webpack_require__("../../../../../src/app/component/editor/editor.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/component/editor/editor.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object])
+], EditorComponent);
+
+var _a, _b;
+//# sourceMappingURL=editor.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/component/navbar/navbar.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -234,7 +357,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <!-- Brand and toggle get grouped for better mobile display -->\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a class=\"navbar-brand\" href=\"#\">Brand</a>\n    </div>\n\n    <!-- Collect the nav links, forms, and other content for toggling -->\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n      <ul class=\"nav navbar-nav\">\n        <li class=\"active\"><a href=\"#\">Link <span class=\"sr-only\">(current)</span></a></li>\n        <li><a href=\"#\">Link</a></li>      \n      </ul>\n      <form class=\"navbar-form navbar-left\">\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" placeholder=\"Search\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n      </form>\n      \n      <form class=\"navbar-form navbar-right\" *ngIf=\"!authService.isAuthenticated()\">\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\n      </form>\n      \n      <ul class=\"nav navbar-nav navbar-right\">    \n        <li class=\"dropdown\" *ngIf=\"authService.isAuthenticated()\">\n          <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            {{profile?.name}}\n            <span class=\"caret\"></span>\n          </a>\n          <ul class=\"dropdown-menu\">\n            <li><a href=\"#\">My Profile</a></li>\n            <li><a href=\"#\">Something else here</a></li>\n            <li><a (click)=\"logout()\">Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n    </div><!-- /.navbar-collapse -->\n  </div><!-- /.container-fluid -->\n</nav>\n</div>\n\n<div class=\"dropdown\">\n  <button class=\"btn btn-default dropdown-toggle\" type=\"button\" id=\"dropdownMenu1\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n    Dropdown\n    <span class=\"caret\"></span>\n  </button>\n  <ul class=\"dropdown-menu\" aria-labelledby=\"dropdownMenu1\">\n    <li><a href=\"#\">Action</a></li>\n    <li><a href=\"#\">Another action</a></li>\n    <li><a href=\"#\">Something else here</a></li>\n    <li role=\"separator\" class=\"divider\"></li>\n    <li><a href=\"#\">Separated link</a></li>\n  </ul>\n</div>"
+module.exports = "<div class=\"container\">\n<nav class=\"navbar navbar-default\">\n  <div class=\"container-fluid\">\n    <!-- Brand and toggle get grouped for better mobile display -->\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a class=\"navbar-brand\" href=\"#\">Brand</a>\n    </div>\n\n    <!-- Collect the nav links, forms, and other content for toggling -->\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n      <ul class=\"nav navbar-nav\">\n        <li class=\"active\"><a href=\"#\">Link <span class=\"sr-only\">(current)</span></a></li>\n        <li><a href=\"#\">Link</a></li>      \n      </ul>\n      <form class=\"navbar-form navbar-left\">\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" placeholder=\"Search\">\n        </div>\n        <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n      </form>\n      \n      <form class=\"navbar-form navbar-right\" *ngIf=\"!authService.isAuthenticated()\">\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\n      </form>\n      \n      <ul class=\"nav navbar-nav navbar-right\">    \n        <li class=\"dropdown\" *ngIf=\"authService.isAuthenticated()\">\n          <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">\n            {{profile?.name}}\n            <span class=\"caret\"></span>\n          </a>\n          <ul class=\"dropdown-menu\">\n            <li><a href=\"#\">My Profile</a></li>\n            <li><a href=\"#\">Something else here</a></li>\n            <li><a (click)=\"logout()\">Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n    </div><!-- /.navbar-collapse -->\n  </div><!-- /.container-fluid -->\n</nav>\n</div>\n\n"
 
 /***/ }),
 
@@ -385,7 +508,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/problemdetails/problemdetails.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class = \"container\" *ngIf = \"problem\">\n  <div class=\"col-xs-12 col-md-4\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n\n  </div>\n</div>\n"
+module.exports = "<div class = \"container\" *ngIf = \"problem\">\n  <div class=\"col-xs-12 col-md-4\">\n    <h2>\n      {{problem.id}}. {{problem.name}}\n    </h2>\n    <p>\n      {{problem.desc}}\n    </p>\n\n  </div>\n  <div class=\"hidden-xs col-sm-12 col-md-8\">\n    <app-editor></app-editor>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -458,7 +581,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/problemlist/problemlist.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <app-newproblem></app-newproblem>\n  <div class=\"list-group\">\n    <a class=\"list-group-item\" *ngFor=\"let problem of problems\"\n\t\t[routerLink]=\"['/api/v1/problems', problem.id]\">\n      <span class=\"{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}\">\n        {{problem.difficulty}}\n      </span>\n      <strong class=\"title\">{{problem.id}}. {{problem.name}}</strong>\n    </a>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <app-newproblem></app-newproblem>\n  <div class=\"list-group\">\n    <a class=\"list-group-item\" *ngFor=\"let problem of problems\"\n\t\t[routerLink]=\"['/problems', problem.id]\">\n      <span class=\"{{'pull-left label difficulty diff-' + problem.difficulty.toLocaleLowerCase()}}\">\n        {{problem.difficulty}}\n      </span>\n      <strong class=\"title\">{{problem.id}}. {{problem.name}}</strong>\n    </a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -661,6 +784,84 @@ var _a;
 
 /***/ }),
 
+/***/ "../../../../../src/app/services/collaboration.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_colors__ = __webpack_require__("../../../../../src/assets/colors.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CollaborationService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CollaborationService = (function () {
+    function CollaborationService() {
+        this.clientsInfo = {};
+        this.clientNum = 0;
+    }
+    CollaborationService.prototype.init = function (editor, sessionId) {
+        var _this = this;
+        this.collaborationSocket = io(window.location.origin, { query: 'sessionId=' + sessionId });
+        // this.collaborationSocket.on('message', (message) => {
+        //   console.log('message received from server:' + message);
+        // })
+        this.collaborationSocket.on('change', function (delta) {
+            console.log("collaboration editor changes " + delta);
+            delta = JSON.parse(delta);
+            editor.lastAppliedChanges = delta;
+            editor.getSession().getDocument().applyDeltas([delta]);
+        });
+        this.collaborationSocket.on('cursorMove', function (cursor) {
+            console.log("cursor move" + cursor);
+            var session = editor.getSession();
+            cursor = JSON.parse(cursor);
+            var x = cursor['row'];
+            var y = cursor['column'];
+            var changeClientId = cursor['socketId'];
+            if (changeClientId in _this.clientsInfo) {
+                session.removeMarker(_this.clientsInfo[changeClientId]['marker']);
+            }
+            else {
+                _this.clientsInfo[changeClientId] = {};
+                var css = document.createElement('style');
+                css.type = 'text/css';
+                css.innerHTML = '.editor_cursor_' + changeClientId
+                    + '{ position: absolute; background: '
+                    + __WEBPACK_IMPORTED_MODULE_1__assets_colors__["a" /* COLORS */][_this.clientNum] + ';'
+                    + 'z-index: 100; width: 3px !important; }';
+                document.body.appendChild(css);
+                _this.clientNum++;
+            }
+            var Range = ace.require('ace/range').Range;
+            var newMarker = session.addMarker(new Range(x, y, x, y + 1), 'editor_cursor_' + changeClientId, true);
+            _this.clientsInfo[changeClientId]['marker'] = newMarker;
+        });
+    };
+    CollaborationService.prototype.change = function (delta) {
+        this.collaborationSocket.emit('change ', delta);
+    };
+    CollaborationService.prototype.cursorMove = function (cursor) {
+        this.collaborationSocket.emit('cursorMove', cursor);
+    };
+    return CollaborationService;
+}());
+CollaborationService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], CollaborationService);
+
+//# sourceMappingURL=collaboration.service.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/services/problemdetails.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -740,6 +941,56 @@ ProblemdetailsService = __decorate([
 
 var _a;
 //# sourceMappingURL=problemdetails.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/assets/colors.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COLORS; });
+var COLORS = [
+    "#0000ff",
+    "#a52a2a",
+    "#00ffff",
+    "#00008b",
+    "#008b8b",
+    "#a9a9a9",
+    "#006400",
+    "#bdb76b",
+    "#8b008b",
+    "#556b2f",
+    "#ff8c00",
+    "#9932cc",
+    "#8b0000",
+    "#e9967a",
+    "#9400d3",
+    "#ff00ff",
+    "#ffd700",
+    "#008000",
+    "#4b0082",
+    "#f0e68c",
+    "#add8e6",
+    "#e0ffff",
+    "#90ee90",
+    "#d3d3d3",
+    "#ffb6c1",
+    "#ffffe0",
+    "#00ff00",
+    "#ff00ff",
+    "#800000",
+    "#000080",
+    "#808000",
+    "#ffa500",
+    "#ffc0cb",
+    "#800080",
+    "#800080",
+    "#ff0000",
+    "#c0c0c0",
+    "#ffffff",
+    "#ffff00"
+];
+//# sourceMappingURL=colors.js.map
 
 /***/ }),
 
