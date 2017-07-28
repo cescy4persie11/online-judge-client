@@ -61,12 +61,16 @@ export class CollaborationService {
   }
 
   change(delta: string): void {
-    this.collaborationSocket.emit('change ', delta);
+    this.collaborationSocket.emit('change', delta);
 
   }
 
   cursorMove(cursor: string) : void {
     this.collaborationSocket.emit('cursorMove', cursor);
+  }
+
+  restoreBuffer(): void {
+    this.collaborationSocket.emit('restoreBuffer');
   }
 
 }

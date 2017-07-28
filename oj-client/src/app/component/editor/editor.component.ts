@@ -53,6 +53,7 @@ export class EditorComponent implements OnInit {
     this.editor.on('change', e => {
       console.log('editor changed' + JSON.stringify(e));
       if (this.editor.lastAppliedChanges != e) {
+        console.log("new changes");
         this.collaborationService.change(JSON.stringify(e));
       }
     });
@@ -63,6 +64,9 @@ export class EditorComponent implements OnInit {
       console.log("cursor move", JSON.stringify(cursor));
       this.collaborationService.cursorMove(JSON.stringify(cursor));
     });
+
+    // call restore buffer to restore changes
+    this.collaborationService.restoreBuffer();
   }
 
   setLanguage(language: string): void {
@@ -81,5 +85,7 @@ export class EditorComponent implements OnInit {
     const userCodes = this.editor.getValue();
     console.log(userCodes);
   }
+
+
 
 }

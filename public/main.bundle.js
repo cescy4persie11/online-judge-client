@@ -296,6 +296,7 @@ var EditorComponent = (function () {
         this.editor.on('change', function (e) {
             console.log('editor changed' + JSON.stringify(e));
             if (_this.editor.lastAppliedChanges != e) {
+                console.log("new changes");
                 _this.collaborationService.change(JSON.stringify(e));
             }
         });
@@ -305,6 +306,8 @@ var EditorComponent = (function () {
             console.log("cursor move", JSON.stringify(cursor));
             _this.collaborationService.cursorMove(JSON.stringify(cursor));
         });
+        // call restore buffer to restore changes
+        this.collaborationService.restoreBuffer();
     };
     EditorComponent.prototype.setLanguage = function (language) {
         this.language = language;
@@ -846,10 +849,13 @@ var CollaborationService = (function () {
         });
     };
     CollaborationService.prototype.change = function (delta) {
-        this.collaborationSocket.emit('change ', delta);
+        this.collaborationSocket.emit('change', delta);
     };
     CollaborationService.prototype.cursorMove = function (cursor) {
         this.collaborationSocket.emit('cursorMove', cursor);
+    };
+    CollaborationService.prototype.restoreBuffer = function () {
+        this.collaborationSocket.emit('restoreBuffer');
     };
     return CollaborationService;
 }());
