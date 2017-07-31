@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CollaborationService } from '../../services/collaboration.service'
+import { ProblemdetailsService } from '../../services/problemdetails.service'
 import { ActivatedRoute, Params }		 from '@angular/router'
+
 
 declare var ace: any;
 
@@ -15,6 +17,8 @@ export class EditorComponent implements OnInit {
   language: string = 'Java';
   sessionId: string;
 
+  output: string = '';
+
   defaultContect = {
     'Java': `function foo(items) { \
     \n\tvar x = "All this is syntax highlighted"; \
@@ -27,7 +31,8 @@ export class EditorComponent implements OnInit {
   }
 
   constructor(private collaborationService: CollaborationService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private problemdetailsService: ProblemdetailsService) {
     
   }
 
@@ -78,12 +83,27 @@ export class EditorComponent implements OnInit {
     console.log("Resetting editor");
     this.editor.getSession().setMode(`ace/mode/${this.language.toLowerCase()}`);
     this.editor.setValue(this.defaultContect[this.language]);
+    this.output = '';
   }
 
   submit() {
+    this.output = '';
     // TODO
     const userCodes = this.editor.getValue();
+
     console.log(userCodes);
+    const codes = {
+      userCodes: userCodes,
+      lang: this.language.toLocaleLowerCase()
+    };
+    console.log('debug');
+    this.problemdetailsService.buildAndRun(codes)
+      // .then(res => this.output = res.text);
+     .then(res => {
+       
+       console.log(res.toString());
+       this.output = res.toString()
+     });
   }
 
 

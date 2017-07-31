@@ -65,7 +65,7 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 AppComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")],
@@ -241,7 +241,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/component/editor/editor.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section>\n  <header>\n    <select class=\"form-control pull-left lang-select\" id=\"language\" name=\"language\"\n     [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n        <option *ngFor=\"let language of languages\" [value]=\"language\">\n          {{ language }}\n        </option>\n      </select>\n\n  </header>\n    <!-- Button trigger modal -->\n<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n  <span class=\"glyphicon glyphicon-refresh\" aria-hidden=\"true\"></span>\n</button>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        Are you Sure?\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n        <button type=\"button\" class=\"btn btn-primary\" >Cancel</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n  <br/>\n\n  <div class=\"row\">\n  </div>\n  <div id=\"editor\">\n  \n  </div>\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">\n      Submit Solution\n    </button>\n  </footer>\n</section>\n\n\n"
+module.exports = "<section>\n  <header>\n    <select class=\"form-control pull-left lang-select\" id=\"language\" name=\"language\"\n     [(ngModel)]=\"language\" (change)=\"setLanguage(language)\">\n        <option *ngFor=\"let language of languages\" [value]=\"language\">\n          {{ language }}\n        </option>\n      </select>\n\n  </header>\n    <!-- Button trigger modal -->\n<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">\n  <span class=\"glyphicon glyphicon-refresh\" aria-hidden=\"true\"></span>\n</button>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        Are you Sure?\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"resetEditor()\">Reset</button>\n        <button type=\"button\" class=\"btn btn-primary\" >Cancel</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n  <br/>\n\n  <div class=\"row\">\n  </div>\n  <div id=\"editor\">\n  </div>\n<div>\n  {{output}}\n</div>\n\n  <footer>\n    <button type=\"button\" class=\"btn btn-success pull-right\" (click)=\"submit()\">\n      Submit Solution\n    </button>\n  </footer>\n</section>\n\n\n"
 
 /***/ }),
 
@@ -251,7 +251,8 @@ module.exports = "<section>\n  <header>\n    <select class=\"form-control pull-l
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__ = __webpack_require__("../../../../../src/app/services/collaboration.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_problemdetails_service__ = __webpack_require__("../../../../../src/app/services/problemdetails.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditorComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -265,12 +266,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var EditorComponent = (function () {
-    function EditorComponent(collaborationService, route) {
+    function EditorComponent(collaborationService, route, problemdetailsService) {
         this.collaborationService = collaborationService;
         this.route = route;
+        this.problemdetailsService = problemdetailsService;
         this.languages = ['Java', 'Python'];
         this.language = 'Java';
+        this.output = '';
         this.defaultContect = {
             'Java': "function foo(items) {     \n\tvar x = \"All this is syntax highlighted\";     \n\treturn x;\n}\n",
             'Python': "class Solution:     \n\tdef example():     \n\t\t # write your Python code here\n    "
@@ -317,24 +321,37 @@ var EditorComponent = (function () {
         console.log("Resetting editor");
         this.editor.getSession().setMode("ace/mode/" + this.language.toLowerCase());
         this.editor.setValue(this.defaultContect[this.language]);
+        this.output = '';
     };
     EditorComponent.prototype.submit = function () {
+        var _this = this;
+        this.output = '';
         // TODO
         var userCodes = this.editor.getValue();
         console.log(userCodes);
+        var codes = {
+            userCodes: userCodes,
+            lang: this.language.toLocaleLowerCase()
+        };
+        console.log('debug');
+        this.problemdetailsService.buildAndRun(codes)
+            .then(function (res) {
+            console.log(res.toString());
+            _this.output = res.toString();
+        });
     };
     return EditorComponent;
 }());
 EditorComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-editor',
         template: __webpack_require__("../../../../../src/app/component/editor/editor.component.html"),
         styles: [__webpack_require__("../../../../../src/app/component/editor/editor.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_collaboration_service__["a" /* CollaborationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["c" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_problemdetails_service__["a" /* ProblemdetailsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_problemdetails_service__["a" /* ProblemdetailsService */]) === "function" && _c || Object])
 ], EditorComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=editor.component.js.map
 
 /***/ }),
@@ -399,7 +416,7 @@ var NavbarComponent = (function () {
     return NavbarComponent;
 }());
 NavbarComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-navbar',
         template: __webpack_require__("../../../../../src/app/component/navbar/navbar.component.html"),
         styles: [__webpack_require__("../../../../../src/app/component/navbar/navbar.component.css")]
@@ -477,7 +494,7 @@ var NewproblemComponent = (function () {
     return NewproblemComponent;
 }());
 NewproblemComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-newproblem',
         template: __webpack_require__("../../../../../src/app/component/newproblem/newproblem.component.html"),
         styles: [__webpack_require__("../../../../../src/app/component/newproblem/newproblem.component.css")]
@@ -550,7 +567,7 @@ var ProblemdetailsComponent = (function () {
     return ProblemdetailsComponent;
 }());
 ProblemdetailsComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-problemdetails',
         template: __webpack_require__("../../../../../src/app/component/problemdetails/problemdetails.component.html"),
         styles: [__webpack_require__("../../../../../src/app/component/problemdetails/problemdetails.component.css")]
@@ -624,7 +641,7 @@ var ProblemlistComponent = (function () {
     return ProblemlistComponent;
 }());
 ProblemlistComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* Component */])({
         selector: 'app-problemlist',
         template: __webpack_require__("../../../../../src/app/component/problemlist/problemlist.component.html"),
         styles: [__webpack_require__("../../../../../src/app/component/problemlist/problemlist.component.css")]
@@ -930,6 +947,20 @@ var ProblemdetailsService = (function () {
             .toPromise()
             .then(function (res) {
             _this.getProblems();
+            return res.json();
+        })
+            .catch(this.handleError);
+    };
+    /**
+     *
+     * @param data TODO: define a model
+     */
+    ProblemdetailsService.prototype.buildAndRun = function (data) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        return this.http.post('/api/v1/build_and_run', data, { headers: headers })
+            .toPromise()
+            .then(function (res) {
+            console.log('in client build and run', res);
             return res.json();
         })
             .catch(this.handleError);
