@@ -20,13 +20,23 @@ export class EditorComponent implements OnInit {
   output: string = '';
 
   defaultContect = {
-    'Java': `function foo(items) { \
-    \n\tvar x = "All this is syntax highlighted"; \
-    \n\treturn x;\n}\n`,
+    'Java': `public class Example { \
+    \n\tpublic static void main (String[] args) { \
+    \n\t\t// Type your java code here\n \
+    \n\t} \
+    \n}`,
     
-    'Python': `class Solution: \
-    \n\tdef example(): \
-    \n\t\t # write your Python code here
+    'Python': `class Solution(): \
+    \n\tdef example(self): \
+    \n\t\t # write your Python code here \
+    \n\t\tprint('hello world from feiyzhao')
+    \n \
+    \ndef main(): \
+    \n\tsol = Solution() \
+    \n\tsol.example() \
+    \n
+    \nif __name__ == '__main__': \
+    \n\tmain()
     `
   }
 
@@ -96,12 +106,12 @@ export class EditorComponent implements OnInit {
       userCodes: userCodes,
       lang: this.language.toLocaleLowerCase()
     };
-    console.log('debug');
+    console.log('debug' + codes);
     this.problemdetailsService.buildAndRun(codes)
       // .then(res => this.output = res.text);
      .then(res => {
        
-       console.log(res.toString());
+       console.log('client editor received' + res.toString());
        this.output = res.toString()
      });
   }

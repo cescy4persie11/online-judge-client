@@ -46,7 +46,7 @@ export class ProblemdetailsService {
 	}
 
 	addProblem(problem: Problem) {
-		const headers = new Headers({'content-type': 'application/json'});
+		const headers = new Headers({'Content-Type': 'application/json'});
 		return this.http.post('/api/v1/problems', problem, {headers})
 			.toPromise()
 			.then((res: Response) => {
@@ -61,7 +61,7 @@ export class ProblemdetailsService {
 	 * @param data TODO: define a model
 	 */
 	buildAndRun(data: any): Promise<Object> {
-		const headers = new Headers({'content-type': 'application/json'});
+		const headers = new Headers({'Content-Type': 'application/json'});
 		return this.http.post('/api/v1/build_and_run', data, {headers})
 			.toPromise()
 			.then((res: Response) => {

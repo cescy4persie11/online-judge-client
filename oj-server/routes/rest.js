@@ -7,7 +7,7 @@ const problemService = require('../services/problemService');
 const nodeRestClient = require('node-rest-client').Client;
 const restClient = new nodeRestClient();
 
-const EXECUTOR_SERVER_URL = 'htttp://localhost:5000/build_and_run';
+const EXECUTOR_SERVER_URL = 'http://localhost:5000/build_and_run';
 
 // registering remote methods
 restClient.registerMethod('build_and_run', EXECUTOR_SERVER_URL, 'POST');
@@ -42,8 +42,7 @@ problemRouter.post('/problems', jsonParser, function(req, res){
 problemRouter.post('/build_and_run', jsonParser, function(req, res) {
     const userCodes = req.body.userCodes;
     const lang = req.body.lang;
-    console.log(lang + ' ' + userCodes);
-    // res.json({'text' : 'hello from nodejs'});
+    console.log('test' + lang + ' ' + userCodes);
 
     restClient.methods.build_and_run(
         {
@@ -52,7 +51,7 @@ problemRouter.post('/build_and_run', jsonParser, function(req, res) {
                 lang: lang
             },
             headers: {
-                'Content-Type': 'application-json'
+                'Content-Type': 'application/json'
             }
         },
         (data, response) => {

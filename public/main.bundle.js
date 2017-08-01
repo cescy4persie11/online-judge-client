@@ -276,8 +276,8 @@ var EditorComponent = (function () {
         this.language = 'Java';
         this.output = '';
         this.defaultContect = {
-            'Java': "function foo(items) {     \n\tvar x = \"All this is syntax highlighted\";     \n\treturn x;\n}\n",
-            'Python': "class Solution:     \n\tdef example():     \n\t\t # write your Python code here\n    "
+            'Java': "public class Example {     \n\tpublic static void main (String[] args) {     \n\t\t// Type your java code here\n     \n\t}     \n}",
+            'Python': "class Solution():     \n\tdef example(self):     \n\t\t # write your Python code here     \n\t\tprint('hello world from feiyzhao')\n    \n     \ndef main():     \n\tsol = Solution()     \n\tsol.example()     \n\n    \nif __name__ == '__main__':     \n\tmain()\n    "
         };
     }
     EditorComponent.prototype.ngOnInit = function () {
@@ -333,10 +333,10 @@ var EditorComponent = (function () {
             userCodes: userCodes,
             lang: this.language.toLocaleLowerCase()
         };
-        console.log('debug');
+        console.log('debug' + codes);
         this.problemdetailsService.buildAndRun(codes)
             .then(function (res) {
-            console.log(res.toString());
+            console.log('client editor received' + res.toString());
             _this.output = res.toString();
         });
     };
@@ -942,7 +942,7 @@ var ProblemdetailsService = (function () {
     };
     ProblemdetailsService.prototype.addProblem = function (problem) {
         var _this = this;
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
         return this.http.post('/api/v1/problems', problem, { headers: headers })
             .toPromise()
             .then(function (res) {
@@ -956,7 +956,7 @@ var ProblemdetailsService = (function () {
      * @param data TODO: define a model
      */
     ProblemdetailsService.prototype.buildAndRun = function (data) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'content-type': 'application/json' });
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
         return this.http.post('/api/v1/build_and_run', data, { headers: headers })
             .toPromise()
             .then(function (res) {
